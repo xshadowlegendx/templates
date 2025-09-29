@@ -1,7 +1,11 @@
 {{- /* Custom Grype Template - Fully Compatible */ -}}
-# 🛡️ Grype Scan Report
+## 🛡️ Grype Scan Report
 
+{{if eq .Source.Type "image" }}
+Scan Target: `{{ .Source.Target.UserInput }}`
+{{else}}
 Scan Target: `{{ .Source.Target }}`
+{{end}}
 
 Scan Time: `{{ .Descriptor.Timestamp }}`
 
@@ -35,7 +39,6 @@ Scan Time: `{{ .Descriptor.Timestamp }}`
 ## 🔍 Top Critical & High Vulnerabilities
 
 {{ $severities := list "Critical" "High" }}
-
 {{- $shown := 0 }}
 {{- range $severity := $severities }}
 {{- range $.Matches }}
@@ -49,13 +52,12 @@ Scan Time: `{{ .Descriptor.Timestamp }}`
 - **Installed Version:** `{{ .Artifact.Version }}`
 - **Fixed Version:** {{ if .Vulnerability.Fix.Versions }}`{{ list .Vulnerability.Fix.Versions | join ", " }}`{{ else }}N/A{{ end }}
 - **Description:** {{ trunc 200 .Vulnerability.Description }}
----
+- - -
     {{- $shown = add $shown 1 }}
     {{- end }}
   {{- end }}
 {{- end }}
 {{- end }}
-
 {{- if eq $shown 0 }}
-✅ No Critical or High vulnerabilities found.
+#### ✅ No Critical or High vulnerabilities found.
 {{- end }}
