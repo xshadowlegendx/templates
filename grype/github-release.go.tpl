@@ -34,7 +34,7 @@ Scan Time: `{{ .Descriptor.Timestamp }}`
 
 ## 🔍 Top Critical & High Vulnerabilities
 
-{{ $severities := list "Critical" "High" "Medium" "Low" }}
+{{ $severities := list "Critical" "High" }}
 
 {{- $shown := 0 }}
 {{- range $severity := $severities }}
@@ -59,8 +59,3 @@ Scan Time: `{{ .Descriptor.Timestamp }}`
 {{- if eq $shown 0 }}
 ✅ No Critical or High vulnerabilities found.
 {{- end }}
-
-## 📘 Notes
-
-- This report shows top 10 Critical/High vulnerabilities only.
-- For full output, refer to attached CI artifacts or pipeline logs.
